@@ -3,7 +3,8 @@ package info.kwarc.mmt.odk.SCSCP.Server
 import java.io.InterruptedIOException
 import java.net.{InetAddress, ServerSocket, Socket}
 
-import info.kwarc.mmt.api.frontend.Extension
+import info.kwarc.mmt.api.Path
+import info.kwarc.mmt.api.frontend.{Controller, Extension}
 import info.kwarc.mmt.odk.OpenMath.OMSymbol
 import info.kwarc.mmt.odk.SCSCP.CD.scscp2
 import info.kwarc.mmt.odk.SCSCP.Protocol.ProtocolError
@@ -173,7 +174,8 @@ object SCSCPServer {
 
 class SCSCPExtension extends Extension {
   override def start(args: List[String]): Unit = {
-    MitMServer.run()
     implicit val ec = scala.concurrent.ExecutionContext.Implicits.global
+    MitMServer.controller = controller
+    MitMServer.run()
   }
 }
